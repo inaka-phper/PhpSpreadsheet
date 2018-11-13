@@ -194,7 +194,7 @@ class Rels extends WriterPart
         $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/package/2006/relationships');
 
         // Write drawing relationships?
-        $d = 0;
+        $d = 1;
         $drawingOriginalIds = [];
         $unparsedLoadedData = $pWorksheet->getParent()->getUnparsedLoadedData();
         if (isset($unparsedLoadedData['sheets'][$pWorksheet->getCodeName()]['drawingOriginalIds'])) {
@@ -206,6 +206,8 @@ class Rels extends WriterPart
         } else {
             $charts = [];
         }
+
+        $this->writeUnparsedRelationship($pWorksheet, $objWriter, 'printerSettings', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings');
 
         if (($pWorksheet->getDrawingCollection()->count() > 0) || (count($charts) > 0) || $drawingOriginalIds) {
             $relPath = '../drawings/drawing' . $pWorksheetId . '.xml';
@@ -270,7 +272,6 @@ class Rels extends WriterPart
 
         $this->writeUnparsedRelationship($pWorksheet, $objWriter, 'ctrlProps', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/ctrlProp');
         $this->writeUnparsedRelationship($pWorksheet, $objWriter, 'vmlDrawings', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing');
-        $this->writeUnparsedRelationship($pWorksheet, $objWriter, 'printerSettings', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings');
 
         $objWriter->endElement();
 
