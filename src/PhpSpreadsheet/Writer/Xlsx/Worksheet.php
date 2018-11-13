@@ -1217,6 +1217,10 @@ class Worksheet extends WriterPart
             return;
         }
 
+        $objWriter->startElement('legacyDrawing');
+        $objWriter->writeAttribute('r:id', 'rId3');
+        $objWriter->endElement();
+
         foreach ($pSheet->getParent()->getUnparsedLoadedData()['sheets'][$pSheet->getCodeName()]['AlternateContents'] as $alternateContent) {
             $objWriter->writeRaw($alternateContent);
         }
